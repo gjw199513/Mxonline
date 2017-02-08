@@ -40,7 +40,9 @@ from xadmin.plugins.auth import UserAdmin
 #     pass
 
 
+# 基础配置
 class BaseSetting(object):
+    # 主题功能
     enable_themes = True
     use_bootswatch = True
 
