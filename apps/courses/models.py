@@ -9,6 +9,7 @@ from DjangoUeditor.models import UEditorField
 # Create your models here.
 
 
+# 课程基本信息model
 class Course(models.Model):
     course_org = models.ForeignKey(CourseOrg, verbose_name=u"课程机构", null=True, blank=True )
     name = models.CharField(max_length=50, verbose_name=u"课程名")
@@ -53,12 +54,15 @@ class Course(models.Model):
         return self.name
 
 
+# 轮播图model
 class BannerCourse(Course):
     class Meta:
         verbose_name = u"轮播课程"
         verbose_name_plural = verbose_name
         proxy = True
 
+
+# 章节model
 class Lesson(models.Model):
     course = models.ForeignKey(Course, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"章节名")
@@ -75,6 +79,8 @@ class Lesson(models.Model):
         #获取章节视频
         return self.video_set.all()
 
+
+# 视频model
 class Video(models.Model):
     lesson = models.ForeignKey(Lesson, verbose_name=u"章节")
     name = models.CharField(max_length=100, verbose_name=u"视频名")
@@ -90,6 +96,7 @@ class Video(models.Model):
         return self.name
 
 
+# 课程资源model
 class CourseResource(models.Model):
     course = models.ForeignKey(Course, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"视频名")
