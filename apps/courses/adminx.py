@@ -6,18 +6,23 @@ from .models import Course, Lesson , Video, CourseResource, BannerCourse
 import xadmin
 from organization.models import CourseOrg
 
+
 class LessonInline(object):
     model = Lesson
     extra = 0
+
 
 class CourseResourceInline(object):
     model = CourseResource
     extra = 0
 
+
+# 课程注册
 class CourseAdmin(object):
-    list_display = ['name', 'desc', 'detail', 'degree', 'learn_time','students','fav_nums','click_nums','add_time', 'get_zj_nums', 'go_to']
-    search_fields = ['name', 'desc', 'detail', 'degree', 'students','fav_nums','click_nums']
-    list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time','students','fav_nums','click_nums','add_time']
+    list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students',
+                    'fav_nums', 'click_nums', 'add_time', 'get_zj_nums', 'go_to']
+    search_fields = ['name', 'desc', 'detail', 'degree', 'students', 'fav_nums', 'click_nums']
+    list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_nums', 'add_time']
     ordering = ['-click_nums']
     readonly_fields = ['fav_nums']
     list_editable = ['degree', 'desc']
@@ -46,6 +51,8 @@ class CourseAdmin(object):
             pass
         return super(CourseAdmin, self).post(request, args, kwargs)
 
+
+# 轮播课程注册
 class BannerCourseAdmin(object):
     list_display = ['name', 'desc', 'detail', 'degree', 'learn_time','students','fav_nums','click_nums','add_time']
     search_fields = ['name', 'desc', 'detail', 'degree', 'students','fav_nums','click_nums']
@@ -61,18 +68,21 @@ class BannerCourseAdmin(object):
         return qs
 
 
+# 章节注册
 class LessonAdmin(object):
     list_display = ['course', 'name', 'add_time']
     search_fields = ['course', 'name']
     list_filter = ['course__name', 'name', 'add_time']
 
 
-class VidoeAdmin(object):
+# 视频注册
+class VideoAdmin(object):
     list_display = ['lesson', 'name', 'add_time']
     search_fields = ['course', 'name']
     list_filter = ['lesson', 'name', 'add_time']
 
 
+# 课程资源注册
 class CourseResourceAdmin(object):
     list_display = ['course', 'name', 'download', 'add_time']
     search_fields = ['course', 'name', 'download']
@@ -82,6 +92,6 @@ class CourseResourceAdmin(object):
 xadmin.site.register(Course, CourseAdmin)
 xadmin.site.register(BannerCourse, BannerCourseAdmin)
 xadmin.site.register(Lesson, LessonAdmin)
-xadmin.site.register(Video, VidoeAdmin)
+xadmin.site.register(Video, VideoAdmin)
 xadmin.site.register(CourseResource, CourseResourceAdmin)
 
