@@ -20,16 +20,21 @@ from organization.models import CourseOrg, Teacher
 from courses.models import Course
 from .models import Banner
 
+
+# 使用邮箱登录
 class CustomBackend(ModelBackend):
     def authenticate(self, username=None, password=None, **kwargs):
         try:
+            # 取得用户的用户名或邮箱
             user = UserProfile.objects.get(Q(username=username) | Q(email=username))
+            # 用户的密码验证
             if user.check_password(password):
                 return user
         except Exception as e:
             return None
 
 
+# 用户激活
 class ActiveUserView(View):
     def get(self, request, active_code):
         all_records = EmailVerifyRecord.objects.filter(code=active_code)
@@ -44,6 +49,7 @@ class ActiveUserView(View):
         return render(request, "login.html")
 
 
+# 注册
 class RegisterView(View):
     def get(self, request):
         register_form = RegisterForm()
@@ -59,11 +65,13 @@ class RegisterView(View):
             user_profile = UserProfile()
             user_profile.username = user_name
             user_profile.email = user_name
+            # 用户未激活
             user_profile.is_active = False
+            # 对明文进行加密
             user_profile.password = make_password(pass_word)
             user_profile.save()
 
-            #写入欢迎注册消息
+            # 写入欢迎注册消息
             user_message = UserMessage()
             user_message.user = user_profile.id
             user_message.message = "欢迎注册慕学在线网"
@@ -76,25 +84,30 @@ class RegisterView(View):
 
 
 class LogoutView(View):
-    #用户登出
+    # 用户登出
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse("index"))
 
 
-
+# 登录
 class LoginView(View):
     def get(self, request):
         return render(request, "login.html", {})
 
     def post(self, request):
+        # 声明form实例
         login_form = LoginForm(request.POST)
+        # 输入是否合法
         if login_form.is_valid():
+            # 取出用户名和密码
             user_name = request.POST.get("username", "")
             pass_word = request.POST.get("password", "")
+            # 用户验证
             user = authenticate(username=user_name, password=pass_word)
             if user is not None:
                 if user.is_active:
+                    # 登录函数（第一个参数为request）
                     login(request, user)
                     return HttpResponseRedirect(reverse("index"))
                 else:
@@ -105,13 +118,15 @@ class LoginView(View):
             return render(request, "login.html", {"login_form": login_form})
 
 
+# 忘记密码
 class ForgetPwdView(View):
     def get(self, request):
         forget_form = ForgetForm()
-        return render(request, "forgetpwd.html", {'forget_form':forget_form})
+        return render(request, "forgetpwd.html", {'forget_form': forget_form})
 
     def post(self, request):
         forget_form = ForgetForm(request.POST)
+        # 忘记密码表单是否合法
         if forget_form.is_valid():
             email = request.POST.get('email', "")
             send_register_email(email, "forget")
@@ -120,11 +135,13 @@ class ForgetPwdView(View):
             return render(request, "forgetpwd.html", {'forget_form': forget_form})
 
 
+# 密码修改
 class ResetView(View):
     def get(self, request, active_code):
         all_records = EmailVerifyRecord.objects.filter(code=active_code)
         if all_records:
             for record in all_records:
+                # 重置密码的用户
                 email = record.email
                 return render(request, "password_reset.html", {"email": email})
         else:
@@ -165,8 +182,6 @@ class UserInfoView(LoginRequiredMixin, View):
             return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
 
-
-
 class UploadImageView(LoginRequiredMixin, View):
     # 用户修改头像
     def post(self, request):
@@ -178,6 +193,7 @@ class UploadImageView(LoginRequiredMixin, View):
             return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
             return HttpResponse('{"status":"fail"}', content_type='application/json')
+
 
 class UpdatePwdView(View):
     #个人中心修改用户密码
