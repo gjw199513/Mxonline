@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 """
 Django settings for Mxonline project.
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    # 自动登录（sessions）
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -143,16 +145,20 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+# 静态文件配置
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
 
+# 邮件发送配置
+# EMAIL_HOST变量为smtp服务器
 EMAIL_HOST = "smtp.163.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "gjw199513@163.com"
 EMAIL_HOST_PASSWORD = 'gjw605134015'
 EMAIL_USE_TLS = False
+# 发件人
 EMAIL_FROM = "gjw199513@163.com"
 
 
