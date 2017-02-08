@@ -40,7 +40,6 @@ from xadmin.plugins.auth import UserAdmin
 #     pass
 
 
-
 class BaseSetting(object):
     enable_themes = True
     use_bootswatch = True
@@ -51,6 +50,8 @@ class GlobalSettings(object):
     site_footer = u"慕学在线网"
     menu_style = "accordion"
 
+
+# 邮箱验证码注册
 class EmailVerifyRecordAdmin(object):
     list_display = ['code', 'email', 'send_type', 'send_time']
     search_fields = ['code', 'email', 'send_type']
@@ -58,6 +59,7 @@ class EmailVerifyRecordAdmin(object):
     model_icon = 'fa fa-address-book'
 
 
+# 轮播图注册
 class BannerAdmin(object):
     list_display = ['title', 'image', 'url', 'index', 'add_time']
     search_fields = ['title', 'image', 'url', 'index']
