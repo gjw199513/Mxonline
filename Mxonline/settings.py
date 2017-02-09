@@ -162,6 +162,7 @@ EMAIL_USE_TLS = False
 EMAIL_FROM = "gjw199513@163.com"
 
 
+# 上传文件配置
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
