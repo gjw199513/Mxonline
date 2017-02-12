@@ -42,21 +42,18 @@
                         </div>
                     </div>
                     {% endfor %}
-
-
-
 			</div>
 
 
-			<div class="pageturn pagerright">
+			<div class="pageturn ">
             <ul class="pagelist">
-                {% if message.has_previous %}
-                    <li class="long"><a href="?{{ message.previous_page_number.querystring }}">上一页</a></li>
+                {% if messages.has_previous %}
+                    <li class="long"><a href="?{{ messages.previous_page_number.querystring }}">上一页</a></li>
                 {% endif %}
 
-                {% for page in message.pages %}
+                {% for page in messages.pages %}
                     {% if page %}
-                        {% ifequal page message.number %}
+                        {% ifequal page messages.number %}
                             <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
                         {% else %}
                             <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
@@ -65,20 +62,9 @@
                         <li class="none"><a href="">...</a></li>
                     {% endif %}
                 {% endfor %}
-                {% if message.has_next %}
-                    <li class="long"><a href="?{{ message.next_page_number.querystring }}">下一页</a></li>
+                {% if messages.has_next %}
+                    <li class="long"><a href="?{{ messages.next_page_number.querystring }}">下一页</a></li>
                 {% endif %}
-
-            </ul>
-
-
-
-
-
-                            <li class="active"><a href="?page=1">1</a></li>
-
-
-
 
 
             </ul>

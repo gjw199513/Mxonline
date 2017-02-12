@@ -45,10 +45,10 @@
                 <div class="top">
                     <div class="fl">
                         <a href=""><h1>{{ teacher.name }}</h1></a>
-                        <span>发表于：2015-10-12</span>
+                        <span>加入于：{{ teacher.add_time|date:"Y F j" }}</span>
                     </div>
                 </div>
-                <div class="middle" style="border-bottom:0;">课程介绍</div>
+                <div class="middle" style="border-bottom:0;">课程数：{{ teacher.get_course_nums }}</div>
             </div>
         </div>
     </div>
