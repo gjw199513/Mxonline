@@ -27,7 +27,9 @@ sys.path.insert(0, os.path.join(BASE_DIR, "extra_apps"))
 SECRET_KEY = '8!bu9dsx#89i)vzew1-*pr52u4)h8x-_e_y%quybda@%c6v5hn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+# 生产环境配置
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -166,7 +168,8 @@ EMAIL_FROM = "gjw199513@163.com"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 生产环境static文件配置
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 DATE_FORMAT = 'Y-m-d D'
