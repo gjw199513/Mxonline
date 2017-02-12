@@ -46,7 +46,12 @@ class CourseOrg(models.Model):
         return self.teacher_set.all().count()
 
     def get_course_nums(self):
+        # 获取课程数
         return self.course_set.all().count()
+
+    def get_org_course(self):
+        # 经典课程
+        return self.course_set.all().order_by("-students")[:3]
 
 
 # 教师信息
