@@ -27,12 +27,19 @@ from django.views.static import serve
 from users.views import LoginView, RegisterView, ActiveUserView,ForgetPwdView,ResetView, ModifyPwdView, LogoutView, IndexView
 from organization.views import OrgView
 from Mxonline.settings import MEDIA_ROOT
+from Mxonline.settings import STATIC_ROOT
+
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
+    # 首页url配置
     url('^$', IndexView.as_view(), name="index"),
+    # 登录url配置
     url('^login/$', LoginView.as_view(), name="login"),
+    # 登出url配置
     url('^logout/$', LogoutView.as_view(), name="logout"),
+    # 注册url配置
     url('^register/$', RegisterView.as_view(), name="register"),
+    # 验证码工具url配置
     url(r'^captcha/', include('captcha.urls')),
     # 邮箱验证码url（提取变量）
     url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name='user_active'),
@@ -56,9 +63,11 @@ urlpatterns = [
     # 富文本相关url
     url(r'^ueditor/', include('DjangoUeditor.urls' )),
 
-    # url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
+    # 生产环境static url配置
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 
 ]
-#   全局404页面配置
+# 全局404页面配置
 handler404 = 'users.views.page_not_found'
+# 全局500页面配置
 handler500 = 'users.views.page_error'
