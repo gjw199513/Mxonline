@@ -22,7 +22,10 @@ class CourseListView(View):
         # 课程搜索
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
-            all_courses = all_courses.filter(Q(name__icontains=search_keywords)| Q(desc__icontains=search_keywords)| Q(detail__icontains=search_keywords))
+            # 字段__icontains对该字段进行select语句，i是不区分大小写
+            all_courses = all_courses.filter(Q(name__icontains=search_keywords)|
+                                             Q(desc__icontains=search_keywords)
+                                             |Q(detail__icontains=search_keywords))
 
         # 课程排序
         sort = request.GET.get('sort', "")
