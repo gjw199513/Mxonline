@@ -34,12 +34,14 @@ class ModifyPwdForm(forms.Form):
     password2 = forms.CharField(required=True, min_length=5)
 
 
+# 修改头像form
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['image']
 
 
+# 用户信息form
 class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfile
