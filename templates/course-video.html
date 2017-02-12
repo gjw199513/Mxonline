@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}公开课视频信息 - 慕学在线网{% endblock %}
+{% block title %}公开课章节信息 - 慕学在线网{% endblock %}
 {% load staticfiles %}
 {% block custom_bread %}
     <section>
@@ -23,6 +23,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/muke/common-less.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/common-less.css' %}">
 {% endblock %}
+
 {% block content %}
         <div id="main">
     <div class="course-infos">
@@ -103,12 +104,12 @@
                     <div class="box mb40">
                         <h4>讲师提示</h4>
                         <div class="teacher-info">
-                            <a href="/u/315464/courses?sort=publish" target="_blank">
+                            <a href="{% url 'org:teacher_detail' course.teacher.id %}" target="_blank">
                                 <img src='{{ MEDIA_URL }}{{ course.teacher.image }}' width='80' height='80' />
                             </a>
-        <span class="tit">
-          <a href="/u/315464/courses?sort=publish" target="_blank">{{ course.teacher.name }}</a>
-        </span>
+                            <span class="tit">
+                              <a href="{% url 'org:teacher_detail' course.teacher.id %}" target="_blank">{{ course.teacher.name }}</a>
+                            </span>
                             <span class="job">{{ course.teacher.work_position }}</span>
                         </div>
                         <div class="course-info-tip">

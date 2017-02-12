@@ -78,9 +78,10 @@
                             <li class="first"><p class="pic9">课程数：<span>{{ course_org.get_course_nums }}</span></p>
                                 <p class="c7">学习人数：<span>{{ course_org.students }}</span></p></li>
                             <li class="c8" style="padding-left:18px;">{{ course_org.address }}</li>
-{#                            <li class="pic10" style="padding-left:18px;">经典课程：#}
-{#                                <a href="/diary/19/">{{ course_org.name }}</a>#}
-
+                            <li class="pic10" style="padding-left:18px;">经典课程：
+                                {% for jdcourse in course_org.get_org_course %}
+                                <a href="{% url 'course:course_detail' jdcourse.id %}">{{ jdcourse.name }}</a>
+                                {% endfor %}
 
                             </li>
                         </ul>
