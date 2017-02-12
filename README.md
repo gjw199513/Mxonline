@@ -1,4 +1,4 @@
-# Mxonlin
+# Mxonline
 # 开发环境
 # python2.7
 # Django1.10
