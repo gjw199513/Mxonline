@@ -34,7 +34,7 @@ class Course(models.Model):
         verbose_name_plural = verbose_name
 
     def get_zj_nums(self):
-        #获取课程章节数
+        # 获取课程章节数
         return self.lesson_set.all().count()
     get_zj_nums.short_description = u'章节数'
 
@@ -44,10 +44,11 @@ class Course(models.Model):
     go_to.short_description = u'跳转'
 
     def get_learn_users(self):
+        # 获取学习用户
         return self.usercourse_set.all()[:5]
 
     def get_course_lesson(self):
-        #获取课程章节
+        # 获取课程章节
         return self.lesson_set.all()
 
     def __unicode__(self):
@@ -76,7 +77,7 @@ class Lesson(models.Model):
         return self.name
 
     def get_lesson_video(self):
-        #获取章节视频
+        # 获取章节视频
         return self.video_set.all()
 
 
