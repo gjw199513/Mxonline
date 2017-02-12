@@ -19,7 +19,7 @@ class CourseListView(View):
 
         hot_courses = Course.objects.all().order_by("-click_nums")[:3]
 
-        #课程搜索
+        # 课程搜索
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
             all_courses = all_courses.filter(Q(name__icontains=search_keywords)| Q(desc__icontains=search_keywords)| Q(detail__icontains=search_keywords))
@@ -38,7 +38,7 @@ class CourseListView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_courses, 3, request=request)
+        p = Paginator(all_courses, 6, request=request)
 
         courses = p.page(page)
 
@@ -50,23 +50,24 @@ class CourseListView(View):
 
 
 class VideoPlayView(View):
-    #视频播放页面
+    # 视频播放页面
     def get(self, request, video_id):
         video = Video.objects.get(id=int(video_id))
         course = video.lesson.course
 
-        #查询用户是否已经关联该课程
+        # 查询用户是否已经关联该课程
         user_courses = UserCourse.objects.filter(user=request.user, course=course)
         if not user_courses:
             user_course = UserCourse(user=request.user, course=course)
             user_course.save()
 
+        # 用户所有课程
         user_courses = UserCourse.objects.filter(course=course)
         user_ids = [user_course.user.id for user_course in user_courses]
         all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
-        #取出所有课程id
+        # 取出所有课程id
         course_ids = [user_course.course.id for user_course in all_user_courses]
-        #获取学过该课程的用户课程
+        # 获取学过该课程的用户课程
         relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:5]
         all_resources = CourseResource.objects.filter(course=course)
         return render(request, "course-play.html", {
@@ -77,30 +78,26 @@ class VideoPlayView(View):
         })
 
 
-
 class CourseDetailView(View):
-    #课程详情页
+    # 课程详情页
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
 
-        #增加课程点击数
+        # 增加课程点击数
         course.click_nums += 1
         course.save()
 
+        # 课程详情页收藏
         has_fav_course = False
         has_fav_org = False
-
         if request.user.is_authenticated():
             if UserFavorite.objects.filter(user=request.user, fav_id=course.id, fav_type=1):
                 has_fav_course = True
-
             if UserFavorite.objects.filter(user=request.user, fav_id=course.course_org.id, fav_type=2):
                 has_fav_org = True
 
-
-
+        # 相关课程推荐，tag为课程标签
         tag = course.tag
-
         if tag:
             relate_courses = Course.objects.filter(tag=tag)[:1]
         else:
@@ -115,12 +112,12 @@ class CourseDetailView(View):
 
 
 class CourseInfoView(LoginRequiredMixin, View):
-    #课程章节信息
+    # 课程章节信息
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
         course.click_nums += 1
         course.save()
-        #查询用户是否已经关联该课程
+        # 查询用户是否已经关联该课程
         user_courses = UserCourse.objects.filter(user=request.user, course=course)
         if not user_courses:
             user_course = UserCourse(user=request.user, course=course)
@@ -128,13 +125,16 @@ class CourseInfoView(LoginRequiredMixin, View):
             course.students += 1
             course.save()
 
+        # 相关课程推荐
         user_courses = UserCourse.objects.filter(course=course)
         user_ids = [user_course.user.id for user_course in user_courses]
+        # 获取用户的所有课程
         all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
-        #取出所有课程id
+        # 取出所有课程id
         course_ids = [user_course.course.id for user_course in all_user_courses]
-        #获取学过该课程的用户课程
+        # 获取学过该课程的用户课程
         relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:5]
+        # 课程资源
         all_resources = CourseResource.objects.filter(course=course)
         return render(request, "course-video.html", {
             "course": course,
@@ -143,6 +143,7 @@ class CourseInfoView(LoginRequiredMixin, View):
         })
 
 
+# 课程评论
 class CommentsView(LoginRequiredMixin, View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
@@ -156,7 +157,7 @@ class CommentsView(LoginRequiredMixin, View):
 
 
 class AddComentsView(View):
-    #用户添加课程评论
+    # 用户添加课程评论
     def post(self, request):
         if not request.user.is_authenticated():
             # 判断用户登录状态
