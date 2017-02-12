@@ -14,7 +14,7 @@ urlpatterns = [
     # 用户头像上传
     url(r'^image/upload/$', UploadImageView.as_view(), name='image_upload'),
 
-    # 用户头像上传
+    # 用户密码修改
     url(r'^update/pwd/$', UpdatePwdView.as_view(), name='update_pwd'),
 
     # 发送邮箱验证码
