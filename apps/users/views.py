@@ -87,6 +87,7 @@ class LogoutView(View):
     # 用户登出
     def get(self, request):
         logout(request)
+        # 重定向到首页
         return HttpResponseRedirect(reverse("index"))
 
 
@@ -150,7 +151,7 @@ class ResetView(View):
 
 
 class ModifyPwdView(View):
-    #修改用户密码
+    # 修改用户密码
     def post(self, request):
         modify_form = ModifyPwdForm(request.POST)
         if modify_form.is_valid():
@@ -171,7 +172,10 @@ class ModifyPwdView(View):
 class UserInfoView(LoginRequiredMixin, View):
     # 用户个人信息
     def get(self, request):
-        return render(request, 'usercenter-info.html', {})
+        current_page = "info"
+        return render(request, 'usercenter-info.html', {
+            'current_page': current_page
+        })
 
     def post(self, request):
         user_info_form = UserInfoForm(request.POST, instance=request.user)
@@ -196,7 +200,7 @@ class UploadImageView(LoginRequiredMixin, View):
 
 
 class UpdatePwdView(View):
-    #个人中心修改用户密码
+    # 个人中心修改用户密码
     def post(self, request):
         modify_form = ModifyPwdForm(request.POST)
         if modify_form.is_valid():
@@ -213,10 +217,11 @@ class UpdatePwdView(View):
 
 
 class SendEmailCodeView(LoginRequiredMixin, View):
-    #发送邮箱验证码
+    # 发送邮箱验证码
     def get(self, request):
         email = request.GET.get('email', '')
 
+        # 判断邮箱是否绑定
         if UserProfile.objects.filter(email=email):
             return HttpResponse('{"email":"邮箱已存在"}', content_type='application/json')
         send_register_email(email, "update_email")
@@ -224,7 +229,7 @@ class SendEmailCodeView(LoginRequiredMixin, View):
 
 
 class UpdateEmailView(LoginRequiredMixin, View):
-    #修改个人邮箱
+    # 修改个人邮箱
     def post(self, request):
         email = request.POST.get('email', '')
         code = request.POST.get('code', '')
@@ -240,18 +245,20 @@ class UpdateEmailView(LoginRequiredMixin, View):
 
 
 class MyCourseView(LoginRequiredMixin, View):
-    #我的课程
+    # 我的课程
     def get(self, request):
+        current_page = "course"
         user_courses = UserCourse.objects.filter(user=request.user)
         return render(request, 'usercenter-mycourse.html', {
             "user_courses": user_courses,
-
+            "current_page": current_page
         })
 
 
 class MyFavOrgView(LoginRequiredMixin, View):
-    #我收藏的课程机构
+    # 我收藏的课程机构
     def get(self, request):
+        current_page = "fav"
         org_list= []
         fav_orgs = UserFavorite.objects.filter(user=request.user, fav_type=2)
         for fav_org in fav_orgs:
@@ -260,13 +267,14 @@ class MyFavOrgView(LoginRequiredMixin, View):
             org_list.append(org)
         return render(request, 'usercenter-fav-org.html', {
             "org_list": org_list,
-
+            "current_page": current_page
         })
 
 
 class MyFavTeacherView(LoginRequiredMixin, View):
-    #我收藏的授课讲师
+    # 我收藏的授课讲师
     def get(self, request):
+        current_page = "fav"
         teacher_list= []
         fav_teachers = UserFavorite.objects.filter(user=request.user, fav_type=3)
         for fav_teacher in fav_teachers:
@@ -275,13 +283,14 @@ class MyFavTeacherView(LoginRequiredMixin, View):
             teacher_list.append(teacher)
         return render(request, 'usercenter-fav-teacher.html', {
             "teacher_list": teacher_list,
-
+            "current_page": current_page
         })
 
 
 class MyFavCoureseView(LoginRequiredMixin, View):
-    #我收藏的授课讲师
+    # 我收藏的课程
     def get(self, request):
+        current_page = 'fav'
         course_list= []
         fav_courses = UserFavorite.objects.filter(user=request.user, fav_type=1)
         for fav_course in fav_courses:
@@ -290,38 +299,39 @@ class MyFavCoureseView(LoginRequiredMixin, View):
             course_list.append(course)
         return render(request, 'usercenter-fav-course.html', {
             "course_list": course_list,
-
+            "current_page": current_page
         })
 
 
 class MyMessageView(LoginRequiredMixin, View):
-    #我的消息
+    # 我的消息
     def get(self, request):
+        current_page = 'message'
         all_message = UserMessage.objects.filter(user=request.user.id)
-        #用户进入个人消息后清空未读记录
+        # 用户进入个人消息后清空未读记录
         all_unread_messages = UserMessage.objects.filter(user=request.user.id, has_read=False)
         for unread_message in all_unread_messages:
             unread_message.has_read = True
             unread_message.save()
-        #对个人消息进行分页
+        # 对个人消息进行分页
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
 
         p = Paginator(all_message, 5, request=request)
-
         messages = p.page(page)
         return render(request, 'usercenter-message.html', {
-            "messages": messages
+            "messages": messages,
+            "current_page": current_page
         })
 
 
 class IndexView(View):
-    #慕学在线网首页
+    # 慕学在线网首页
     def get(self, request):
-        #取出轮播图
-        #print 1/0
+        # print 1/0
+        # 取出轮播图
         all_banners = Banner.objects.all().order_by('index')
         courses = Course.objects.filter(is_banner=False)[:6]
         banner_courses = Course.objects.filter(is_banner=True)[:3]
