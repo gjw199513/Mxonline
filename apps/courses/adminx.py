@@ -29,7 +29,7 @@ class CourseAdmin(object):
     exclude = ['click_nums']
     inlines = [LessonInline, CourseResourceInline]
     # refresh_times = [3,5]
-    style_fields = {"detail":"ueditor"}
+    style_fields = {"detail": "ueditor"}
     import_excel = True
 
     def queryset(self):
@@ -38,7 +38,7 @@ class CourseAdmin(object):
         return qs
 
     def save_models(self):
-        #在保存课程的时候统计课程机构的课程数
+        # 在保存课程的时候统计课程机构的课程数
         obj = self.new_obj
         obj.save()
         if obj.course_org is not None:
