@@ -29,7 +29,8 @@ class OrgView(View):
         # 机构搜索
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
-            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) |
+                                       Q(desc__icontains=search_keywords))
 
         # 取出筛选城市
         city_id = request.GET.get('city', "")
@@ -209,6 +210,7 @@ class AddFavView(View):
             return HttpResponse('{"status":"success", "msg":"收藏"}', content_type='application/json')
 
         else:
+            # 记录不存在 表示用户未收藏，并进行收藏
             user_fav = UserFavorite()
             if int(fav_id) > 0 and int(fav_type) > 0:
                 user_fav.user = request.user
@@ -239,7 +241,7 @@ class TeacherListView(View):
     def get(self, request):
         all_teachers = Teacher.objects.all()
 
-        # 课程搜索
+        # 讲师搜索
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
             all_teachers = all_teachers.filter(Q(name__icontains=search_keywords)|

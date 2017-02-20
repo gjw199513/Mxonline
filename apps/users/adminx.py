@@ -9,7 +9,7 @@ from .models import EmailVerifyRecord, Banner, UserProfile
 from xadmin import views
 from xadmin.plugins.auth import UserAdmin
 
-#
+# 重载xadmin的用户信息界面
 # class UserProfileAdmin(UserAdmin):
 #     # def get_form_layout(self):
 #     #     if self.org_obj:
