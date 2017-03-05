@@ -29,7 +29,7 @@ def add_view_permissions(sender, **kwargs):
         # build our permission slug
         codename = "view_%s" % content_type.model
 
-        # if it doesn't exist..
+        # if it doesn't exist ..
         if not Permission.objects.filter(content_type=content_type, codename=codename):
             # add it
             Permission.objects.create(content_type=content_type,
