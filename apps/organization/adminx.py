@@ -19,7 +19,8 @@ class CourseOrgAdmin(object):
     list_display = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city', 'add_time']
     search_fields = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city']
     list_filter = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city', 'add_time']
-    relfield_style = "fk-ajax"
+    relfield_style = ["fk-ajax"]
+    style_fields = {"desc": "ueditor"}
 
 
 # 教师注册
