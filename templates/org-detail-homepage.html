@@ -6,7 +6,7 @@
 <div class="right companycenter layout grouping" >
         <div class="head">
             <h1>全部课程</h1>
-            <a class="green fr more" href="org-detail-course.html">查看更多  >  </a>
+            <a class="green fr more" href="{% url 'org:org_course' course_org.id %}">查看更多  >  </a>
         </div>
         <div class="brief group_list">
             {% for course in all_courses %}
@@ -32,7 +32,7 @@
 <div class="right companycenter layout" >
     <div class="head">
         <h1>机构教师</h1>
-        <a class="green fr more" href="org-detail-teachers.html">查看更多  >  </a>
+        <a class="green fr more" href="{% url 'org:org_teacher' course_org.id %}">查看更多  >  </a>
     </div>
     {% for teacher in all_teachers %}
         <div class="diarys">
@@ -62,13 +62,17 @@
 <div class="right companycenter layout" >
         <div class="head">
             <h1>机构介绍</h1>
-            <a class="green fr more" href="org-detail-desc.html">查看更多  >  </a>
+{#            <a class="green fr more" href="{% url 'org:org_desc' course_org.id %}">查看更多  >  </a>#}
         </div>
 
-        <div class="cont">&nbsp; &nbsp; <p>&nbsp; &nbsp;{{ course_org.desc }}</p>
+        <div class="cont">&nbsp; &nbsp; <p>&nbsp; &nbsp;
+            {% autoescape off %}
+            {{ course_org.desc }}
+            {% endautoescape %}
+</p>
             <p><br/></p>
             <p><br/></p>
-            <a href="/company/desc/22/"><span class="green">[查看更多]</span></a>
+            <a href="{% url 'org:org_desc' course_org.id %}"><span class="green">[查看更多]</span></a>
     </div>
 </div>
 {% endblock %}
