@@ -136,7 +136,7 @@ class CourseInfoView(LoginRequiredMixin, View):
         # 取出所有课程id
         course_ids = [user_course.course.id for user_course in all_user_courses]
         # 获取学过该课程的用户课程
-        relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:5]
+        relate_courses = Course.objects.filter(id__in=course_ids).order_by("-click_nums")[:3]
         # 课程资源
         all_resources = CourseResource.objects.filter(course=course)
         return render(request, "course-video.html", {
