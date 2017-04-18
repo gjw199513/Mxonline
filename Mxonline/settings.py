@@ -155,13 +155,13 @@ STATICFILES_DIRS = (
 
 # 邮件发送配置
 # EMAIL_HOST变量为smtp服务器
-EMAIL_HOST = "smtp.163.com"
+EMAIL_HOST = "smtp.sina.com"
 EMAIL_PORT = 25
-EMAIL_HOST_USER = "gjw199513@163.com"
+EMAIL_HOST_USER = "gjw199513@sina.com"
 EMAIL_HOST_PASSWORD = 'gjw605134015'
 EMAIL_USE_TLS = False
 # 发件人
-EMAIL_FROM = "gjw199513@163.com"
+EMAIL_FROM = "gjw199513@sina.com"
 
 
 # 上传文件配置

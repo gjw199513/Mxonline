@@ -13,6 +13,7 @@ from utils.mixin_utils import LoginRequiredMixin
 # Create your views here.
 
 
+# 课程列表页
 class CourseListView(View):
     def get(self, request):
         all_courses = Course.objects.all().order_by("-add_time")
@@ -159,7 +160,7 @@ class CommentsView(LoginRequiredMixin, View):
         })
 
 
-class AddComentsView(View):
+class AddCommentsView(View):
     # 用户添加课程评论
     def post(self, request):
         if not request.user.is_authenticated():

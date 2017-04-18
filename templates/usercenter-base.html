@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title>{% block title %}个人信息- 慕学在线网{% endblock %}</title>
+	<title>{% block title %}个人信息- 燕知在线网{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -26,7 +26,7 @@
 		<div  class="header2 header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
+					<div class="fl"><p>服务电话：<b>4008123123</b></p></div>
 					<!--登录后跳转-->
           {% if request.user.is_authenticated %}
             <div class="personal">
@@ -63,7 +63,7 @@
     <div class="middle">
         <div class="wp">
             <a href="{% url 'index' %}"><img class="fl" src="{% static 'images/logo2.png' %}"/></a>
-            <h1>我的慕学网</h1>
+            <h1>我的燕知网</h1>
         </div>
     </div>
 			</div>

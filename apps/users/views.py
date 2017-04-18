@@ -53,7 +53,11 @@ class ActiveUserView(View):
 class RegisterView(View):
     def get(self, request):
         register_form = RegisterForm()
-        return render(request, "register.html", {'register_form': register_form})
+        banner_courses = Course.objects.filter(is_banner=True)[:3]
+        return render(request, "register.html", {
+            'register_form': register_form,
+            'banner_courses': banner_courses,
+        })
 
     def post(self, request):
         register_form = RegisterForm(request.POST)
@@ -74,7 +78,7 @@ class RegisterView(View):
             # 写入欢迎注册消息
             user_message = UserMessage()
             user_message.user = user_profile.id
-            user_message.message = "欢迎注册慕学在线网"
+            user_message.message = "欢迎注册燕知在线网"
             user_message.save()
 
             send_register_email(user_name, "register")
@@ -94,7 +98,10 @@ class LogoutView(View):
 # 登录
 class LoginView(View):
     def get(self, request):
-        return render(request, "login.html", {})
+        banner_courses = Course.objects.filter(is_banner=True)[:3]
+        return render(request, "login.html", {
+            'banner_courses': banner_courses,
+        })
 
     def post(self, request):
         # 声明form实例
@@ -259,7 +266,7 @@ class MyFavOrgView(LoginRequiredMixin, View):
     # 我收藏的课程机构
     def get(self, request):
         current_page = "fav"
-        org_list= []
+        org_list = []
         fav_orgs = UserFavorite.objects.filter(user=request.user, fav_type=2)
         for fav_org in fav_orgs:
             org_id = fav_org.fav_id
@@ -275,7 +282,7 @@ class MyFavTeacherView(LoginRequiredMixin, View):
     # 我收藏的授课讲师
     def get(self, request):
         current_page = "fav"
-        teacher_list= []
+        teacher_list = []
         fav_teachers = UserFavorite.objects.filter(user=request.user, fav_type=3)
         for fav_teacher in fav_teachers:
             teacher_id = fav_teacher.fav_id
@@ -291,7 +298,7 @@ class MyFavCoureseView(LoginRequiredMixin, View):
     # 我收藏的课程
     def get(self, request):
         current_page = 'fav'
-        course_list= []
+        course_list = []
         fav_courses = UserFavorite.objects.filter(user=request.user, fav_type=1)
         for fav_course in fav_courses:
             course_id = fav_course.fav_id
@@ -328,7 +335,7 @@ class MyMessageView(LoginRequiredMixin, View):
 
 
 class IndexView(View):
-    # 慕学在线网首页
+    # 燕知在线网首页
     def get(self, request):
         # print 1/0
         # 取出轮播图

@@ -275,6 +275,7 @@ class TeacherListView(View):
 
 
 class TeacherDetailView(View):
+    # 课程讲师详情页
     def get(self, request, teacher_id):
         teacher = Teacher.objects.get(id=int(teacher_id))
         teacher.click_nums += 1

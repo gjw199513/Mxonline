@@ -38,7 +38,7 @@ def send_register_email(email, send_type="register"):
 
     if send_type == 'register':
         # 邮件发送标题和内容
-        email_title = '慕学在线网注册激活链接'
+        email_title = '燕知在线网注册激活链接'
         email_body = "请点击下面的链接激活你的账号：http://127.0.0.1:8000/active/{0}".format(code)
 
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
@@ -46,7 +46,7 @@ def send_register_email(email, send_type="register"):
             pass
 
     elif send_type == 'forget':
-        email_title = '慕学在线网密码重置链接'
+        email_title = '燕知在线网密码重置链接'
         email_body = "请点击下面的链接重置你的密码：http://127.0.0.1:8000/reset/{0}".format(code)
 
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
@@ -54,7 +54,7 @@ def send_register_email(email, send_type="register"):
             pass
 
     elif send_type == 'update_email':
-        email_title = '慕学在线邮箱修改验证码'
+        email_title = '燕知在线邮箱修改验证码'
         email_body = "你的邮箱验证码为：{0}".format(code)
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
         if send_status:

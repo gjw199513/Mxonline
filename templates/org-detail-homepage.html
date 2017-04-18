@@ -38,13 +38,13 @@
         <div class="diarys">
         <div class="module5 share company-diary-box" style="padding:10px 0;">
             <div class="left">
-                <img class="pic" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
+                <a href="{% url "org:teacher_detail" teacher.id %}"><img class="pic" src="{{ MEDIA_URL }}{{ teacher.image }}"/></a>
                 <p>昵称：{{ teacher.name }}</p>
             </div>
             <div class="right">
                 <div class="top">
                     <div class="fl">
-                        <a href=""><h1>{{ teacher.name }}</h1></a>
+                        <a href="{% url "org:teacher_detail" teacher.id %}"><h1>{{ teacher.name }}</h1></a>
                         <span>加入于：{{ teacher.add_time|date:"Y F j" }}</span>
                     </div>
                 </div>

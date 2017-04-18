@@ -48,8 +48,8 @@ class BaseSetting(object):
 
 
 class GlobalSettings(object):
-    site_title = u"慕学后台管理系统"
-    site_footer = u"慕学在线网"
+    site_title = u"燕知后台管理系统"
+    site_footer = u"燕知在线网"
     menu_style = "accordion"
 
 

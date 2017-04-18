@@ -66,6 +66,7 @@ urlpatterns = [
     # 生产环境static url配置
     url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 
+
 ]
 # 全局404页面配置
 handler404 = 'users.views.page_not_found'
