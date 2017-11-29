@@ -4,21 +4,23 @@ from django.contrib.auth.forms import (UserCreationForm, UserChangeForm,
                                        AdminPasswordChangeForm, PasswordChangeForm)
 from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.utils.html import escape
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.forms import ModelMultipleChoiceField
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from xadmin.layout import Fieldset, Main, Side, Row, FormHelper
 from xadmin.sites import site
 from xadmin.util import unquote
 from xadmin.views import BaseAdminPlugin, ModelFormAdminView, ModelAdminView, CommAdminView, csrf_protect_m
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
 ACTION_NAME = {
     'add': _('Can add %s'),
     'change': _('Can change %s'),
@@ -197,7 +199,7 @@ class ChangePasswordView(ModelAdminView):
         helper.include_media = False
         self.form.helper = helper
         context.update({
-            'title': _('Change password: %s') % escape(unicode(self.obj)),
+            'title': _('Change password: %s') % escape(smart_text(self.obj)),
             'form': self.form,
             'has_delete_permission': False,
             'has_change_permission': True,
@@ -260,7 +262,8 @@ class ChangeAccountPasswordView(ChangePasswordView):
             return self.get_response()
 
 
-site.register_view(r'^users/userprofile/(.+)/password/$',
+user_model = settings.AUTH_USER_MODEL.lower().replace('.','/')
+site.register_view(r'^%s/(.+)/password/$' % user_model,
                    ChangePasswordView, name='user_change_password')
 site.register_view(r'^account/password/$', ChangeAccountPasswordView,
                    name='account_password')

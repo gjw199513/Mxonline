@@ -50,6 +50,7 @@ class BaseSetting(object):
 class GlobalSettings(object):
     site_title = u"燕知后台管理系统"
     site_footer = u"燕知在线网"
+    # 收缩app
     menu_style = "accordion"
 
 
@@ -73,5 +74,7 @@ xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 # xadmin.site.register(UserProfile, UserProfileAdmin)
 
+# 主题注册
 xadmin.site.register(views.BaseAdminView, BaseSetting)
+# 界面部分设置
 xadmin.site.register(views.CommAdminView, GlobalSettings)

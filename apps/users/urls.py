@@ -36,6 +36,6 @@ urlpatterns = [
     url(r'^myfav/course/$', MyFavCoureseView.as_view(), name='myfav_course'),
 
     # 我的消息
-    url(r'^mymessage/course/$', MyMessageView.as_view(), name='mymessage'),
+    url(r'^mymessage/$', MyMessageView.as_view(), name='mymessage'),
 
 ]

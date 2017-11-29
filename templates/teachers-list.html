@@ -24,7 +24,7 @@
 					<li class="{% if sort == '' %}active{% endif %}"><a href="?sort=">全部</a> </li>
 					<li class="{% if sort == 'hot' %}active{% endif %}"><a href="?sort=hot">人气 &#8595;</a></li>
 				</ul>
-                <div class="fr butler-num">共<span class="key">9</span>人&nbsp;&nbsp;&nbsp;</div>
+                <div class="fr butler-num">共<span class="key">{{ teacher_nums }}</span>人&nbsp;&nbsp;&nbsp;</div>
 			</div>
                 {% for teacher in all_teachers.object_list %}
                 <dl class="des">
@@ -36,8 +36,8 @@
                         </a>
 {#						<div class="btn">#}
 {#							<div class="fr btn2 bdsharebuttonbox"#}
-{#                                 data-text="授课教师-奥巴马-燕知在线"#}
-{#                                 data-desc="我在#慕课网#发现了教师“奥巴马”，对学习中的小伙伴很有帮助，一起来看看吧。"#}
+{#                                 data-text="授课讲师-奥巴马-燕知在线"#}
+{#                                 data-desc="我在#慕课网#发现了讲师“奥巴马”，对学习中的小伙伴很有帮助，一起来看看吧。"#}
 {#                                 data-comment="奥巴马金牌讲师，从业年限：5年"#}
 {#                                 >#}
 {#                                <span class="fl">分享</span>#}
@@ -93,7 +93,7 @@
 		<div class="head">讲师排行榜</div>
             {% for hot_teacher in sorted_teacher %}
             <dl class="des">
-                <span class="num fl">1</span>
+                <span class="num fl">{{ forloop.counter }}</span>
                 <a href="{% url 'org:teacher_detail' hot_teacher.id %}">
                     <dt>
                         <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_teacher.image }}"/>

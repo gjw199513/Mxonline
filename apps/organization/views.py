@@ -19,11 +19,11 @@ from courses.models import Course
 class OrgView(View):
     # 课程机构列表功能
     def get(self, request):
-        # 课程机构
+        # 查询课程机构
         all_orgs = CourseOrg.objects.all()
         # 根据点击数进行排名
         hot_orgs = all_orgs.order_by("-click_nums")[:3]
-        # 城市
+        # 查询城市
         all_citys = CityDict.objects.all()
 
         # 机构搜索
@@ -80,7 +80,7 @@ class AddUserAskView(View):
         if userask_form.is_valid():
             # 保存到数据库中
             user_ask = userask_form.save(commit=True)
-            # 进行异步的提交
+            # 进行异步的提交,返回ajax操作
             return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
             return HttpResponse('{"status":"fail", "msg":"添加出错"}', content_type='application/json')
@@ -99,8 +99,9 @@ class OrgHomeView(View):
         if request.user.is_authenticated():
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
-        # 取出机构课程
+        # 取出所有机构课程，取出外键的值
         all_courses = course_org.course_set.all()[:3]
+        # 取出所有机构讲师，取出外键的值
         all_teachers = course_org.teacher_set.all()[:1]
         return render(request, 'org-detail-homepage.html', {
             "all_courses": all_courses,
@@ -254,6 +255,8 @@ class TeacherListView(View):
             if sort == 'hot':
                 all_teachers = all_teachers.order_by("-click_nums")
 
+        teacher_nums = all_teachers.count()
+
         # 讲师排行榜
         sorted_teacher = Teacher.objects.all().order_by("-click_nums")[:3]
 
@@ -271,6 +274,7 @@ class TeacherListView(View):
             "all_teachers": teachers,
             "sorted_teacher": sorted_teacher,
             "sort": sort,
+            "teacher_nums":teacher_nums,
         })
 
 

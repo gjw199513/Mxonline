@@ -17,7 +17,7 @@ class CityDict(models.Model):
         verbose_name = u"城市"
         verbose_name_plural = verbose_name
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -40,11 +40,11 @@ class CourseOrg(models.Model):
         verbose_name = u"课程机构"
         verbose_name_plural = verbose_name
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_teacher_nums(self):
-        # 获取课程机构的教师数量
+        # 获取课程机构的讲师数量
         return self.teacher_set.all().count()
 
     def get_course_nums(self):
@@ -56,7 +56,7 @@ class CourseOrg(models.Model):
         return self.course_set.all().order_by("-students")[:3]
 
 
-# 教师信息
+# 讲师信息
 class Teacher(models.Model):
     org = models.ForeignKey(CourseOrg, verbose_name=u"所属机构")
     name = models.CharField(max_length=50, verbose_name=u"教师名称")
@@ -74,7 +74,7 @@ class Teacher(models.Model):
         verbose_name = u"教师"
         verbose_name_plural = verbose_name
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_course_nums(self):

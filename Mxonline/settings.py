@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+# 自定义AUTH登录方式，基本的只能用用户名登录，加入后可用邮箱登录
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    # 分页功能
     'pure_pagination',
     'DjangoUeditor',
 
@@ -86,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # media上下文处理器
                 'django.template.context_processors.media',
             ],
         },
@@ -98,6 +101,7 @@ WSGI_APPLICATION = 'Mxonline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# 数据库配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -146,8 +150,8 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
 # 静态文件配置
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -172,7 +176,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
-DATE_FORMAT = 'Y-m-d D'
+DATE_FORMAT = 'Y-m-d'
 
 
 

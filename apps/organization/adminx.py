@@ -23,7 +23,7 @@ class CourseOrgAdmin(object):
     style_fields = {"desc": "ueditor"}
 
 
-# 教师注册
+# 讲师注册
 class TeacherAdmin(object):
     list_display = ['org', 'name', 'work_years', 'work_company', 'work_position', 'points', 'click_nums', 'fav_nums', 'add_time']
     search_fields = ['org', 'name', 'work_years', 'work_company', 'work_position', 'points', 'click_nums', 'fav_nums']

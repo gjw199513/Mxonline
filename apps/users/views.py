@@ -27,7 +27,7 @@ class CustomBackend(ModelBackend):
         try:
             # 取得用户的用户名或邮箱
             user = UserProfile.objects.get(Q(username=username) | Q(email=username))
-            # 用户的密码验证
+            # 用户的密码验证，密码是以密文加密的，不能直接等于password，需要调用一下函数
             if user.check_password(password):
                 return user
         except Exception as e:
@@ -117,6 +117,7 @@ class LoginView(View):
                 if user.is_active:
                     # 登录函数（第一个参数为request）
                     login(request, user)
+                    # reverse跳转到index页面，render导向原页面
                     return HttpResponseRedirect(reverse("index"))
                 else:
                     return render(request, "login.html", {"msg": "用户未激活"})
@@ -196,6 +197,7 @@ class UserInfoView(LoginRequiredMixin, View):
 class UploadImageView(LoginRequiredMixin, View):
     # 用户修改头像
     def post(self, request):
+        # request.FILES保存用户上传的文件
         image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
         if image_form.is_valid():
             # image = image_form.cleaned_data['image']
