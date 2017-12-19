@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 # 自定义AUTH登录方式，基本的只能用用户名登录，加入后可用邮箱登录
+# 元组后面需要加逗号
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
+    # 图片验证码
     'captcha',
     # 分页功能
     'pure_pagination',

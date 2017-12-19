@@ -23,11 +23,15 @@ from .models import Banner
 
 # 使用邮箱登录
 class CustomBackend(ModelBackend):
+    # 认证用户,重写了ModelBackend中的authenticate方法
     def authenticate(self, username=None, password=None, **kwargs):
         try:
             # 取得用户的用户名或邮箱
+            # 使用或（|）时，用Q
+            # 加入逗号可以当做和
             user = UserProfile.objects.get(Q(username=username) | Q(email=username))
             # 用户的密码验证，密码是以密文加密的，不能直接等于password，需要调用一下函数
+            # check_password它接收两个参数：要检查的纯文本密码，和数据库中用户的True字段的完整值。
             if user.check_password(password):
                 return user
         except Exception as e:
@@ -36,7 +40,9 @@ class CustomBackend(ModelBackend):
 
 # 用户激活
 class ActiveUserView(View):
+    # 将验证码作为传入参数
     def get(self, request, active_code):
+        # filter返回一个新的QuerySet，它包含满足查询参数的对象。
         all_records = EmailVerifyRecord.objects.filter(code=active_code)
         if all_records:
             for record in all_records:
