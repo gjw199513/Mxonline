@@ -29,6 +29,7 @@ class CourseListView(View):
                                              |Q(detail__icontains=search_keywords))
 
         # 课程排序
+        # 里面的值必须与html中的参数对应
         sort = request.GET.get('sort', "")
         if sort:
             if sort == 'students':
